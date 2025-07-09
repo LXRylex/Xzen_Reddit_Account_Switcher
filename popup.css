@@ -1,0 +1,110 @@
+:root {
+  --bg: #111;
+  --fg: #eee;
+  --accent: #9b59b6;
+  --input-bg: #222;
+}
+* { box-sizing: border-box; margin:0; padding:0; font-family:sans-serif }
+body { width:260px; background:var(--bg); color:var(--fg) }
+
+.container { padding:12px }
+h1 { text-align:center; color:var(--accent); margin-bottom:8px }
+.save-section { display:flex; gap:6px; margin-bottom:12px }
+.save-section input {
+  flex:1;
+  padding:6px;
+  background:var(--input-bg);
+  border:1px solid var(--accent);
+  border-radius:4px;
+  color:var(--fg);
+}
+.save-section button {
+  padding:6px 10px;
+  background:var(--input-bg);
+  border:1px solid var(--accent);
+  border-radius:4px;
+  cursor:pointer;
+}
+.save-section button:hover {
+  background:var(--accent);
+  color:#111;
+  transition:0.2s;
+}
+
+#accountsList { list-style:none; }
+#accountsList li {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px;
+  background:var(--input-bg);
+  border:1px solid #333;
+  border-radius:4px;
+  padding:6px;
+  margin-bottom:6px;
+}
+.account-name {
+  flex:1 1 auto;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#accountsList li button {
+  background:transparent;
+  border:none;
+  color:var(--accent);
+  cursor:pointer;
+}
+#accountsList li button:hover { color:#fff }
+
+/* modal */
+.modal {
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal.hidden { display:none }
+.modal-content {
+  background:var(--bg);
+  padding:12px;
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  width:220px;
+}
+.modal-content input {
+  padding:6px;
+  background:var(--input-bg);
+  border:1px solid var(--accent);
+  border-radius:4px;
+  color:var(--fg);
+  margin-bottom:8px;
+}
+.modal-buttons {
+  display:flex;
+  gap:8px;
+}
+.modal-buttons button {
+  flex:1;
+  padding:6px 0;
+  background:var(--input-bg);
+  border:1px solid var(--accent);
+  border-radius:4px;
+  cursor:pointer;
+}
+.modal-buttons button:hover {
+  background:var(--accent);
+  color:#111;
+  transition:0.2s;
+}
+.save-section button {
+  color: #fff;
+}
+
+.modal-buttons button {
+  color: #fff;
+}
