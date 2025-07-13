@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Xzen ReddSwitcher",
-  "version": "1.3",
+  "version": "1.4",
   "description": "Save & switch Reddit accounts",
   "author": "Yuilix",
   "icons": {
@@ -9,10 +9,26 @@
     "48": "icon.png",
     "128": "icon.png"
   },
-  "permissions": ["cookies","storage","tabs"],
-  "host_permissions": ["*://*.reddit.com/*"],
+  "permissions": [
+    "cookies",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*.reddit.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.reddit.com/*"],
+      "js": ["reload.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }
