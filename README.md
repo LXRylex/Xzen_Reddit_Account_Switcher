@@ -51,4 +51,5 @@ Feel free to open issues or submit pull requests. All contributions are welcome!
 All Rights Reserved. You may not copy, modify, or redistribute this software without explicit permission from the author.
 
 Extension Store Page: https://chromewebstore.google.com/detail/xzen-reddswitcher/phgceelfckbblkoenaaajalniclklcia
-
+Patreon: https://www.patreon.com/c/Yuilix
+>nothing much in it if you want you can donate its up to you ^-^
