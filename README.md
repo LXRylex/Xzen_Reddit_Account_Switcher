@@ -49,3 +49,6 @@ Feel free to open issues or submit pull requests. All contributions are welcome!
 ## 📝 License
 
 All Rights Reserved. You may not copy, modify, or redistribute this software without explicit permission from the author.
+
+Extension Store Page: https://chromewebstore.google.com/detail/phgceelfckbblkoenaaajalniclklcia?utm_source=item-share-cb
+
