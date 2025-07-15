@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Xzen ReddSwitcher",
-  "version": "1.4",
+  "version": "1.5",
   "description": "Save & switch Reddit accounts",
   "author": "Yuilix",
   "icons": {
