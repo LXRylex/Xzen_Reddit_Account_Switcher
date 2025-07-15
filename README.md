@@ -1,6 +1,6 @@
 # Xzen ReddSwitcher
 
-![Xzen ReddSwitcher Logo](icon.png)
+![Xzen ReddSwitcher Logo](new_icon.png)
 
 Simple Chrome extension to switch between your Reddit accounts in one click.
 
