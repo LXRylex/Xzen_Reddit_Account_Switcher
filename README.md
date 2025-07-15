@@ -15,6 +15,7 @@ Xzen ReddSwitcher saves and restores your `reddit_session` cookie locally, encry
 * **Local only**: All session data and encryption keys stay in your browser. No servers, no external calls.
 * **Encrypted**: Your cookie values are secured with AES-GCM encryption.
 * **No tracking**: We don’t collect or transmit any personal information or usage data.
+* **Right click switch**: for easier access to switch between saved accounts
 
 ## ⚙️ Features
 
