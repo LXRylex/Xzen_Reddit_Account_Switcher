@@ -19,12 +19,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function initCrypto() {
   const { rawKey } = await chrome.storage.local.get("rawKey");
   if (rawKey) {
-    const bytes = Uint8Array.from(atob(rawKey), c=>c.charCodeAt(0));
-    cryptoKey = await crypto.subtle.importKey("raw", bytes, { name:"AES-GCM" }, false, ["encrypt","decrypt"]);
-  } else {
-    cryptoKey = await crypto.subtle.generateKey({ name:"AES-GCM", length:256 }, true, ["encrypt","decrypt"]);
-    const raw = await crypto.subtle.exportKey("raw", cryptoKey);
-    await chrome.storage.local.set({ rawKey: btoa(String.fromCharCode(...new Uint8Array(raw))) });
+    cryptoKey = await crypto.subtle.importKey(
+      "raw",
+      Uint8Array.from(atob(rawKey), c => c.charCodeAt(0)),
+      { name:"AES-GCM" },
+      false,
+      ["encrypt","decrypt"]
+    );
   }
 }
 
@@ -37,7 +38,7 @@ async function encryptText(text) {
 }
 
 async function decryptText(data) {
-  const raw = Uint8Array.from(atob(data), c=>c.charCodeAt(0));
+  const raw = Uint8Array.from(atob(data), c => c.charCodeAt(0));
   const iv  = raw.slice(0,12), ct = raw.slice(12);
   const pt  = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, cryptoKey, ct);
   return new TextDecoder().decode(pt);
@@ -56,27 +57,12 @@ async function saveAccount() {
   loadAccounts();
 }
 
-async function switchAccount(name) {
-  const { sessions={} } = await chrome.storage.local.get("sessions");
-  const entry = sessions[name];
-  if (!entry) return alert("No session for " + name);
-
-  const val = await decryptText(entry.enc);
-  for (let url of ["https://www.reddit.com/","https://reddit.com/"]) {
-    await chrome.cookies.remove({ url, name:COOKIE_NAME });
-    await chrome.cookies.set({ url, name:COOKIE_NAME, value:val, domain:".reddit.com", path:"/", secure:true, httpOnly:true });
-  }
-
-  // signal reload to content-script
-  await chrome.storage.local.set({ lastSwitched: Date.now() });
-}
-
 async function deleteAccount(name) {
   const { sessions={}, order=[], hiddenStates={} } = await chrome.storage.local.get(["sessions","order","hiddenStates"]);
   delete sessions[name];
   delete hiddenStates[name];
   const idx = order.indexOf(name);
-  if (idx > -1) order.splice(idx,1);
+  if (idx>-1) order.splice(idx,1);
   await chrome.storage.local.set({ sessions, order, hiddenStates });
   loadAccounts();
 }
@@ -90,29 +76,29 @@ function startEdit(name) {
 
 async function applyEdit() {
   const newName = editInput.value.trim();
-  if (!newName || newName === currentEdit) {
+  if (!newName || newName===currentEdit) {
     modal.classList.add("hidden");
     return;
   }
   const { sessions={}, order=[], hiddenStates={} } = await chrome.storage.local.get(["sessions","order","hiddenStates"]);
   sessions[newName]     = sessions[currentEdit];
-  hiddenStates[newName] = hiddenStates[currentEdit] || false;
+  hiddenStates[newName] = hiddenStates[currentEdit]||false;
   delete sessions[currentEdit];
   delete hiddenStates[currentEdit];
   const idx = order.indexOf(currentEdit);
-  if (idx > -1) order[idx] = newName;
+  if (idx>-1) order[idx] = newName;
   await chrome.storage.local.set({ sessions, order, hiddenStates });
-  currentEdit = null;
+  currentEdit=null;
   modal.classList.add("hidden");
   loadAccounts();
 }
 
 async function toggleVisibility(li, span, btn) {
   const name   = li.dataset.name;
-  const hidden = li.dataset.hidden !== "true";
+  const hidden = li.dataset.hidden!=="true";
   li.dataset.hidden = hidden;
-  span.textContent  = hidden ? "•".repeat(name.length) : name;
-  btn.textContent   = hidden ? "𓂋" : "👁";
+  span.textContent  = hidden? "•".repeat(name.length): name;
+  btn.textContent   = hidden? "𓂋":"👁";
   const { hiddenStates={} } = await chrome.storage.local.get("hiddenStates");
   hiddenStates[name] = hidden;
   await chrome.storage.local.set({ hiddenStates });
@@ -130,12 +116,17 @@ async function loadAccounts() {
     li.dataset.hidden = hf;
     li.draggable      = true;
 
+    const handle = document.createElement("span");
+    handle.className = "drag-handle";
+    handle.textContent = "≡";
+    li.append(handle);
+
     const span = document.createElement("span");
     span.className   = "account-name";
-    span.textContent = hf ? "•".repeat(name.length) : name;
+    span.textContent = hf? "•".repeat(name.length): name;
 
     const eyeBtn = document.createElement("button");
-    eyeBtn.textContent = hf ? "𓂋" : "👁";
+    eyeBtn.textContent = hf? "𓂋":"👁";
     eyeBtn.onclick     = () => toggleVisibility(li, span, eyeBtn);
 
     const editBtn = document.createElement("button");
@@ -144,28 +135,27 @@ async function loadAccounts() {
 
     const swBtn = document.createElement("button");
     swBtn.textContent = "Switch";
-    swBtn.onclick     = () => switchAccount(name);
+    swBtn.onclick     = () => {
+
+      chrome.runtime.sendMessage({ action: "switch-account", name });
+    };
 
     const dlBtn = document.createElement("button");
     dlBtn.textContent = "Delete";
     dlBtn.onclick     = () => deleteAccount(name);
 
+    li.append(span, eyeBtn, editBtn, swBtn, dlBtn);
+
     li.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", name);
       e.dropEffect = "move";
     });
-    li.addEventListener("dragover", e => {
-      e.preventDefault();
-      li.classList.add("drag-over");
-    });
-    li.addEventListener("dragleave", () => {
-      li.classList.remove("drag-over");
-    });
+    li.addEventListener("dragover", e => { e.preventDefault(); li.classList.add("drag-over"); });
+    li.addEventListener("dragleave", () => li.classList.remove("drag-over"));
     li.addEventListener("drop", async e => {
-      e.preventDefault();
-      li.classList.remove("drag-over");
+      e.preventDefault(); li.classList.remove("drag-over");
       const from = e.dataTransfer.getData("text/plain");
-      if (from && from !== name) {
+      if (from && from!==name) {
         const idxFrom = order.indexOf(from);
         const idxTo   = order.indexOf(name);
         order.splice(idxFrom,1);
@@ -175,7 +165,6 @@ async function loadAccounts() {
       }
     });
 
-    li.append(eyeBtn, span, editBtn, swBtn, dlBtn);
     list.append(li);
   }
 }
