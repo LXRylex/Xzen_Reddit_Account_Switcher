@@ -47,6 +47,11 @@ Xzen ReddSwitcher saves and restores your `reddit_session` cookie locally, encry
 
 Feel free to open issues or submit pull requests. All contributions are welcome!
 
+## Version meanings:
+> 1 = Is for extension's version
+> 7 = Current Month
+> 16 = Updated Day
+
 ## 📝 License
 
 All Rights Reserved. You may not copy, modify, or redistribute this software without explicit permission from the author.
