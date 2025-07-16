@@ -1,22 +1,39 @@
 {
   "manifest_version": 3,
-  "name": "Xzen ReddSwitcher",
-  "version": "1.5",
+  "name": "uSwitch: Reddit Accounts",
+  "version": "1.7.16",
   "description": "Save & switch Reddit accounts",
   "author": "Yuilix",
   "icons": {
-    "16": "new_icon.png",
-    "48": "new_icon.png",
-    "128": "new_icon.png"
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   },
   "permissions": [
     "cookies",
-    "storage",
-    "contextMenus"
+    "storage"
   ],
   "host_permissions": [
     "*://*.reddit.com/*"
   ],
+  "commands": {
+    "switch-1": {
+      "suggested_key": { "default": "Ctrl+Shift+1" },
+      "description": "Switch to account #1"
+    },
+    "switch-2": {
+      "suggested_key": { "default": "Ctrl+Shift+2" },
+      "description": "Switch to account #2"
+    },
+    "switch-3": {
+      "suggested_key": { "default": "Ctrl+Shift+3" },
+      "description": "Switch to account #3"
+    },
+    "switch-4": {
+      "suggested_key": { "default": "Ctrl+Shift+4" },
+      "description": "Switch to account #4"
+    }
+  },
   "background": {
     "service_worker": "background.js"
   },
@@ -27,8 +44,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.reddit.com/*"],
-      "js": ["reload.js"],
-      "run_at": "document_idle"
+      "js": ["reload.js"]
     }
   ]
 }
