@@ -54,7 +54,19 @@ Feel free to open issues or submit pull requests. All contributions are welcome!
 
 ## 📝 License
 
-All Rights Reserved. You may not copy, modify, or redistribute this software without explicit permission from the author.
+© 2024 - 2025 Yuilix / Xzentosia. All rights reserved.
+
+This software and all associated assets are the intellectual property of the author.  
+You may not copy, modify, redistribute, rebrand, or sublicense any part of this project without explicit, written permission.
+
+Unauthorized use — including clones, republishing under a different name, or monetization without approval — is strictly prohibited and may result in legal action.
+
+Brand names such as "Xzentosia", "Xzen" and project published by this author are protected under author-defined terms of use.
+
+You are free to:
+
+* view the source code.
+* make personal use of the code without publishing anywhere publicly without a valid permission.
 
 Extension Store Page: https://chromewebstore.google.com/detail/xzen-reddswitcher/phgceelfckbblkoenaaajalniclklcia
 Patreon: https://www.patreon.com/c/Yuilix
