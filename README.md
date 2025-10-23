@@ -59,7 +59,7 @@ Feel free to open issues or submit pull requests. All contributions are welcome!
 This software and all associated assets are the intellectual property of the author.  
 You may not copy, modify, redistribute, rebrand, or sublicense any part of this project without explicit, written permission.
 
-Unauthorized use — including clones, republishing under a different name, or monetization without approval — is strictly prohibited and may result in legal action.
+Unauthorized use - including clones, republishing under a different name, or monetization without approval - is strictly prohibited and may result in legal action.
 
 Brand names such as "Xzentosia", "Xzen" and project published by this author are protected under author-defined terms of use.
 
